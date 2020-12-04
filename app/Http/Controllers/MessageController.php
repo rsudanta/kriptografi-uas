@@ -32,9 +32,9 @@ class MessageController extends Controller
             'key' => 'required',
             'message' => 'required'
         ]);
-
-        $plain = strtoupper($request->message);
-        $plain_text = str_split($plain);
+        $clean = preg_replace('/\s+/', '', $request->message);
+        $string = strtoupper($clean);
+        $plain_text = str_split($string);
         $n = count($plain_text);
         $k = strtoupper($request->key);
         $key = str_split($k);
