@@ -32,26 +32,30 @@ class MessageController extends Controller
             'key' => 'required',
             'message' => 'required'
         ]);
-        $plain_text = str_split($request->message);
+
+        $plain = strtoupper($request->message);
+        $plain_text = str_split($plain);
         $n = count($plain_text);
-        $key = str_split($request->key);
+        $k = strtoupper($request->key);
+        $key = str_split($k);
         $m = count($key);
 
         $encrypted_text = '';
 
         for ($i = 0; $i < $n; $i++) {
-            $encrypted_text .= chr(((ord($plain_text[$i]) - 65 + ord($key[$i % $m]) - 65) % 26) + 65);
+                $encrypted_text .= chr(((ord($plain_text[$i]) - 65 + ord($key[$i % $m]) - 65) % 26) + 65);
         }
+
 
         $encrypted = str_split($encrypted_text);
         $n = count($encrypted);
-        $key = str_split($request->key);
+        $k = strtoupper($request->key);
+        $key = str_split($k);
         $m = count($key);
         $decrypted_text = '';
 
         for ($i = 0; $i < $n; $i++) {
-
-            $decrypted_text .= chr(((26 + ord($encrypted[$i]) - 65 - ord($key[$i % $m]) + 65) % 26) + 65);
+                $decrypted_text .= chr(((26 + ord($encrypted[$i]) - 65 - ord($key[$i % $m]) + 65) % 26) + 65);
         }
 
         $user = Auth::user();
