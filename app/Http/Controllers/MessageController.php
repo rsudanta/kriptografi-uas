@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
-use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,21 +11,28 @@ class MessageController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
     }
+
 
     public function index()
     {
-        $items = Message::all();
-        $status = Status::where('user_id', Auth::user()->id)->get();
-
-        return view('home', [
-            'items' => $items,
-            'status' => $status
-        ]);
+        return view('home');
     }
 
-    public function store(Request $request)
+    public function rot13_view()
+    {
+        return view('rot13');
+    }
+
+    public function show_vignere($id)
+    {
+        $lastest = Message::latest()->value('id');
+        $items = Message::where($lastest, $$id)->first();
+        return view('vignere_result', [
+            'items' => $items
+        ]);
+    }
+    public function vignere_encrypt(Request $request)
     {
         $request->validate([
             'key' => 'required',
@@ -43,81 +49,69 @@ class MessageController extends Controller
         $encrypted_text = '';
 
         for ($i = 0; $i < $n; $i++) {
-                $encrypted_text .= chr(((ord($plain_text[$i]) - 65 + ord($key[$i % $m]) - 65) % 26) + 65);
+            $encrypted_text .= chr(((ord($plain_text[$i]) - 65 + ord($key[$i % $m]) - 65) % 26) + 65);
         }
 
 
         $encrypted = str_split($encrypted_text);
         $n = count($encrypted);
-        $k = strtoupper($request->key);
+        $clean = preg_replace('/\s+/', '', $request->key);
+        $k = strtoupper($clean);
         $key = str_split($k);
         $m = count($key);
         $decrypted_text = '';
 
         for ($i = 0; $i < $n; $i++) {
-                $decrypted_text .= chr(((26 + ord($encrypted[$i]) - 65 - ord($key[$i % $m]) + 65) % 26) + 65);
+            $decrypted_text .= chr(((26 + ord($encrypted[$i]) - 65 - ord($key[$i % $m]) + 65) % 26) + 65);
         }
-
-        $user = Auth::user();
-        $message = $user->messages()->create([
-            'message' => $request->message,
-            'key' => $request->key,
-            'encrypted' => $encrypted_text,
-            'decrypted' => $decrypted_text
-        ]);
-
-        Status::with(['user', 'message'])->create([
-            'message_id' => $message->id,
-            'user_id' => Auth::user()->id,
-            'status' => 'NOT',
-        ]);
-
-        return redirect()->route('home');
+        return redirect()->route('home')->with(
+            [
+                'encrypted' => $encrypted_text,
+                'decrypted' => $decrypted_text,
+                'key' => $k,
+            ]
+        );
     }
 
-    public function show($id)
+    public function vignere_decrypt(Request $request)
     {
-        $items = Message::where('id', $id)->get();
-        return view('decode', [
-            'items' => $items
-        ]);
-    }
+        $clean = preg_replace('/\s+/', '', $request->message);
+        $string = strtoupper($clean);
+        $encrypted = str_split($string);
+        $n = count($encrypted);
+        $clean = preg_replace('/\s+/', '', $request->key);
+        $k = strtoupper($clean);
+        $key = str_split($k);
+        $m = count($key);
+        $decrypted_text = '';
 
-    public function decode(Request $request, $id)
-    {
-        $key = Message::where('id', $id)->value('key');
-        Status::where('message_id', $id)->get();
-        $request->validate([
-            'key' => 'required',
-        ]);
-        $items = [
-            'status' => 'DONE'
-        ];
-        if ($request->input('key') == $key) {
-            Status::where('message_id', $id)->update($items);
+        for ($i = 0; $i < $n; $i++) {
+            $decrypted_text .= chr(((26 + ord($encrypted[$i]) - 65 - ord($key[$i % $m]) + 65) % 26) + 65);
         }
-        return redirect()->route('home');
+        return redirect()->route('home')->with(
+            [
+                'encrypted' => $string,
+                'decrypted' => $decrypted_text,
+                'key' => $k,
+            ]
+        );
     }
 
 
     public function rot13(Request $request)
     {
+        $request->validate([
+            'message' => 'required'
+        ]);
         $plain_text = $request->message;
         $encrypt = str_rot13($plain_text);
         $decrypt = str_rot13($encrypt);
-        $user = Auth::user();
 
-        $message = $user->messages()->create([
-            'message' => $request->message,
-            'encrypted' => $encrypt,
-            'decrypted' => $decrypt
-        ]);
-
-        Status::with(['user', 'message'])->create([
-            'message_id' => $message->id,
-            'user_id' => Auth::user()->id,
-            'status' => 'NOT',
-        ]);
-        return redirect()->route('home');
+        return redirect()->route('rot13_view')->with(
+            [
+                'encrypted' => $encrypt,
+                'decrypted' => $decrypt,
+            ]
+        );
     }
 }

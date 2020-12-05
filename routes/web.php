@@ -12,15 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\MessageController::class, 'index'])->name('home');
-Route::post('/home/store/vignere', [App\Http\Controllers\MessageController::class, 'store'])->name('store');
-Route::get('/home/decode/{id}', [App\Http\Controllers\MessageController::class, 'show'])->name('show');
-Route::post('/home/decode/run/{id}', [App\Http\Controllers\MessageController::class, 'decode'])->name('decode');
-Route::post('/home/store/rot13', [App\Http\Controllers\MessageController::class, 'rot13'])->name('rot13');
+Route::get('/vignere', [App\Http\Controllers\MessageController::class, 'index'])->name('home');
+Route::get('/rot13', [App\Http\Controllers\MessageController::class, 'rot13_view'])->name('rot13_view');
+Route::post('/vignere/encrypt', [App\Http\Controllers\MessageController::class, 'vignere_encrypt'])->name('vignere-encrypt');
+Route::post('/vignere/decrypt', [App\Http\Controllers\MessageController::class, 'vignere_decrypt'])->name('vignere-decrypt');
+Route::post('/rot13/encrypt', [App\Http\Controllers\MessageController::class, 'rot13'])->name('rot13');

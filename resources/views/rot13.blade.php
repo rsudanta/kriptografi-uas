@@ -11,9 +11,10 @@
 </head>
 
 <!-- Navbar -->
-<body class="container">
+
+<body>
     <section class="navbar">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
                 aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -21,11 +22,11 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <a class="navbar-brand" href="#">Hidden brand</a>
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Vignere Chipper <span class="sr-only">(current)</span></a>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{{ route('home') }}">Vignere Chipper <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">ROT 13</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ route('rot13_view') }}">ROT 13</a>
                     </li>
                 </ul>
             </div>
@@ -34,37 +35,32 @@
     <!-- End Navbar -->
 
 
-<!-- Content -->
+    <!-- Content -->
     <div class="content">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h2>Vignere Chipper</h2>
-                @forelse ($items as $item)
-                    <div class="clearfix pt-2">
-                        {{ $item->user->name }} : {{ $item->status->status == 'NOT' ? $item->encrypted : $item->decrypted }}
-                        @if ($item->status->status == 'NOT')
-                            <a href="{{ route('show', $item->id) }}" class="btn btn-dark ml-5">Decode</a>
-                        @endif
-                    </div>
-                @empty
-                    <div class="clearfix">
-                        Tidak ada pesan
-                    </div>
-                @endforelse
+                <h2>ROT 13</h2>
 
-                <form action="{{ route('store') }}" method="POST">
+                <form action="{{ route('rot13') }}" method="POST">
                     @csrf
                     <div class="input-group pt-4">
-                        <input type="hidden" name="id" class="form-control">
                         <input type="text" name="message" class="form-control" placeholder="Type your message here...">
-                        <input type="text" name="key" class="form-control" placeholder="Type your key here...">
 
                         <button class="btn btn-primary">
-                            Send
+                            Encrypt
                         </button>
                 </form>
+
             </div>
+            @if (strlen(session('encrypted')) > 0)
+                <div class="card" style="height: 500px">
+                    <h2>Result</h2>
+                    Encrypted Text : {{ session('encrypted') }}
+                    Decrypted Text : {{ session('decrypted') }}
+                </div>
+            @endif
         </div>
+    </div>
     </div>
     <!-- End Content -->
 </body>
