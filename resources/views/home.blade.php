@@ -79,9 +79,9 @@
         <div class="main-content">
             <div class="form-row">
                 <ul style="list-style:none" class="hasil col-11 p-3">
-                    <li>ENCRYPTED TEXT : {{ session('encrypted') }} </li>
-                    <li>DECRYPTED TEXT : {{ session('decrypted') }} </li>
-                    <li>KEY : {{ session('key') }}</li>
+                    <li><b>ENCRYPTED TEXT :</b> {{ session('encrypted') }} </li>
+                    <li><b>DECRYPTED TEXT :</b> {{ session('decrypted') }} </li>
+                    <li><b>KEY :</b> {{ session('key') }}</li>
                 </ul>
             </div>
         </div>

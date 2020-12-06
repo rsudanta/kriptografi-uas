@@ -25,7 +25,7 @@
                 <a class="navbar-brand" href="#">Hidden brand</a>
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item ">
-                        <a class="nav-link" href="{{ route('home') }}">Vignere Chipper <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ route('home') }}">Vignere Cipher<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ route('rot13_view') }}">ROT 13</a>
@@ -41,30 +41,30 @@
     <div class="content">
     <img src="{{ url('img/image1.png') }}" alt="" class="gambar float-left">
         <div class="main-content">
-        <h1>ROT 13</h1>
+            <h1>ROT 13</h1>
             <form action="{{ route('rot13') }}" method="POST">
                 @csrf
                 <div class="form-row mt-3">
                     <div class="col-5 plaintext">
-                    <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Type your message here..."></textarea>
+                        <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Type your message here..."></textarea>
                     </div>
-                    <button class="btn btn-submit">
-                        Encrypt
-                    </button>
-            </form>
-            @if (strlen(session('encrypted')) > 0)
-            <div class="main-content">
-                <div class="form-row">
-                    <ul style="list-style:none" class="hasil col-11 p-3">
-                        <li>Encrypted Text : {{ session('encrypted') }}</li>
-                        <li>Decrypted Text : {{ session('decrypted') }}</li>
-                    </ul>
                 </div>
-            </div>
-            @endif
+                <div class="mt-4">
+                    <button class="btn btn-submit">Encrypt</button>
+                </div>
+            </form>
         </div>
     </div>
+    @if (strlen(session('encrypted')) > 0)
+    <div class="main-content">
+        <div class="form-row">
+            <ul style="list-style:none" class="hasil col-11 p-3">
+                <li><b>Encrypted Text :</b> {{ session('encrypted') }}</li>
+                <li><b>Decrypted Text :</b> {{ session('decrypted') }}</li>
+            </ul>
+        </div>
     </div>
+    @endif
     <!-- End Content -->
 </body>
 
