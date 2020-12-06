@@ -29,10 +29,10 @@
                  <span class="navbar-toggler-icon"></span>
              </button>
              <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                 <a class="navbar-brand" href="#">Hidden brand</a>
+                 <a class="navbar-brand" href="#">Chippy</a>
                  <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                      <li class="nav-item ">
-                         <a class="nav-link" href="{{ route('home') }}">Vignere Cipher<span
+                         <a class="nav-link" href="{{ route('home') }}">Vigenere Cipher<span
                                  class="sr-only">(current)</span></a>
                      </li>
                      <li class="nav-item active">

@@ -28,10 +28,10 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a class="navbar-brand" href="#">Hidden brand</a>
+                <a class="navbar-brand" href="#">Chippy</a>
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('home') }}">Vignere Cipher <span
+                        <a class="nav-link" href="{{ route('home') }}">Vigenere Cipher <span
                                 class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
@@ -64,7 +64,7 @@
                 <h1>Encrypt</h1>
                 <form action="{{ route('vignere-encrypt') }}" method="POST">
                     @csrf
-                    <div class="mt-3 row">
+                    <div class="mt-3 form-row">
                         <div class="col-lg-6 col-md-12">
                             <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="4"
                                 placeholder="Enter plain text here..."></textarea>

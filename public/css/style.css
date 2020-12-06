@@ -3,6 +3,7 @@ body {
     background-color: #ffffff;
     font-family: "Poppins", sans-serif;
     font-weight: normal;
+    overflow-x: hidden;
 }
 
 .gambar {
@@ -77,4 +78,9 @@ input[type=text] {
 
 .col-md-12 {
     padding-right: 40px !important;
+}
+
+.navbar-brand {
+    font-weight: 900;
+    font-size: 40px;
 }
