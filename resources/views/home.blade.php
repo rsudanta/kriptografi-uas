@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
+    <title>Vignere Cipher</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url('css/style.css') }}">    
 </head>
 
 <!-- Navbar -->
@@ -23,7 +25,7 @@
                 <a class="navbar-brand" href="#">Hidden brand</a>
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('home') }}">Vignere Chipper <span
+                        <a class="nav-link" href="{{ route('home') }}">Vignere Cipher <span
                                 class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
@@ -38,50 +40,54 @@
 
     <!-- Content -->
     <div class="content">
-        <div class=" justify-content-center">
-            <div class="container">
-                <h2>Vignere Chipper</h2>
-
-                <form action="{{ route('vignere-encrypt') }}" method="POST">
-                    @csrf
-                    <div class="input-group pt-4">
-                        <input type="text" name="message" class="form-control" placeholder="Type your message here...">
-                        <input type="text" name="key" class="form-control" placeholder="Type your key here...">
-
-                        <button class="btn btn-primary">
-                            Encrypt
-                        </button>
-                </form>
-            </div>
-
-            <div class="container">
-                <form action="{{ route('vignere-decrypt') }}" method="POST">
-                    @csrf
-                    <div class="input-group pt-4">
-                        <input type="text" name="message" class="form-control" placeholder="Type your message here...">
-                        <input type="text" name="key" class="form-control" placeholder="Type your key here...">
-
-                        <button class="btn btn-primary">
-                            Decrypt
-                        </button>
-                </form>
-            </div>
-
-
-            @if (strlen(session('encrypted')) > 0)
-                <div class="card" style="height: 500px">
-                    <h2>Result</h2>
-                    Encrypted Text : {{ session('encrypted') }}
-                    Decrypted Text : {{ session('decrypted') }}
-                    Key : {{ session('key') }}
+        <img src="{{ url('img/image1.png') }}" alt="" class="gambar float-left">
+        <div class="main-content">
+            <h1>Encrypt</h1>
+            <form action="{{ route('vignere-encrypt') }}" method="POST">
+                @csrf
+                <div class="form-row mt-3">
+                    <div class="col-5 plaintext">
+                        <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Enter plain text here..."></textarea>
+                    </div>
+                    <div class="col-4 key">
+                      <input type="text" name="key" class="form-control" placeholder="Enter key here...">
+                    </div>
                 </div>
-            @endif
+                <div class="mt-4">
+                    <button class="btn btn-submit">Encrypt</button>
+                </div>
+            </form>
         </div>
+        <div class="main-content">
+            <h1>Decrypt</h1>
+            <form action="{{ route('vignere-decrypt') }}" method="POST">
+                @csrf
+                <div class="form-row mt-3">
+                    <div class="col-5 plaintext">
+                        <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Enter plain text here..."></textarea>
+                    </div>
+                    <div class="col-4 key">
+                      <input type="text" name="key" class="form-control" placeholder="Enter key here...">
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button class="btn btn-submit">Decrypt</button>
+                </div>
+            </form>
+        </div>
+        @if (strlen(session('encrypted')) > 0)
+        <div class="main-content">
+            <div class="form-row">
+                <ul style="list-style:none" class="hasil col-11 p-3">
+                    <li>ENCRYPTED TEXT : {{ session('encrypted') }} </li>
+                    <li>DECRYPTED TEXT : {{ session('decrypted') }} </li>
+                    <li>KEY : {{ session('key') }}</li>
+                </ul>
+            </div>
+        </div>
+        @endif
     </div>
-    </div>
-    <!-- End Content -->
 </body>
-
 
 <footer>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"

@@ -1,0 +1,73 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
+body {
+    background-color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    font-weight: normal;
+}
+
+.gambar {
+    width: 705px;
+    height: 810px;
+    margin-right: 80px;
+}
+
+.main-content {
+    margin-top: 60px;
+    margin-left: 50px;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: normal;
+    color: #4F4F4F;
+}
+
+textarea {
+    resize: none;
+    width: 307px !important;
+    height: 115px!important;
+    border: 2px solid #82AAFF !important;
+}
+
+.plaintext {
+    margin-right: 65px;
+}
+
+input[type=text] {
+    width: 245px;
+    height: 57px;
+    border: 2px solid #82AAFF;
+}
+
+.btn-submit {
+    width: 222px;
+    height: 50px;
+    background-color: #82AAFF;
+    color: #ffffff;
+    border-radius: 40px;
+    font-size: 24px;
+    font-weight: 500;
+    margin-left: 5px;
+}
+
+.hasil {
+    margin-top: 20px;
+    width: 583px;
+    height: 124px;
+    border-radius: 5px;
+    border: 2px solid black;
+    font-size: 18px;
+}
+
+.nav-item {
+    font-size: 24px;
+    color: #4F4F4F;
+}
+
+.navbar-light .navbar-nav .active>.nav-link,
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .nav-link.show,
+.navbar-light .navbar-nav .show>.nav-link {
+    color: #82AAFF;
+    font-weight: bold;
+}
